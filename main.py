@@ -5,9 +5,9 @@
 
 # before executing this file you should make a file named OPENAI_API_KEY and put there your api key
 
-import os
-import openai
 import sys
+
+import openai
 
 openai.api_key = ""
 
@@ -15,7 +15,7 @@ openai.api_key = ""
 def write_read_mem(option, *token):  # write or read token from token file
     if option:
         file = open(sys.path[0] + "/memory.mem", "w")
-        file.write(token)
+        file.write(str(token))
         file.close()
         return 0
     else:
@@ -53,7 +53,12 @@ while True:
     if user_input in "!BREAK":
         break
     if user_input in "!SAVE":
-        prompt = prompt + response + _restart_sequence
+        try:
+            prompt = prompt + response + _restart_sequence
+        except NameError:
+            print("[ERROR] cannot save without any input!\nYou probably reopened and saved instantly again.")
+            print("Exiting...")
+            break
         write_read_mem(True, prompt)
     # print(f"[DEBUG] raw user input: {user_input}")
     user_input = _restart_sequence + user_input
