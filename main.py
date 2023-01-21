@@ -2,6 +2,9 @@
 # TODO also make a prompt so that I can fetch data from a image generator
 # TODO make a GUI
 # TODO redesign the prompt
+
+# before executing this file you should make a file named OPENAI_API_KEY and put there your api key
+
 import os
 import openai
 import sys
