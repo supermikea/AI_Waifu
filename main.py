@@ -39,8 +39,9 @@ def remove_newline(_response):
     return res
 
 
-_start_sequence = " Pekora: "
-_restart_sequence = " Mike: "
+_start_sequence = " Wakari: "
+name = input("What is your name? ")
+_restart_sequence = name
 
 prompt = write_read_mem(False)
 
@@ -48,7 +49,7 @@ temp_fix = False
 
 while True:
 
-    user_input = input("Mike: ")
+    user_input = input(_restart_sequence)
     if user_input in "!BREAK":
         break
     if user_input in "!SAVE":
@@ -83,4 +84,4 @@ while True:
     # print(f"[DEBUG] RAW TEXT RESPONSE:{response}")
     response = remove_newline(response)
 
-    print("Pekora: " + response)
+    print(_start_sequence + response)
