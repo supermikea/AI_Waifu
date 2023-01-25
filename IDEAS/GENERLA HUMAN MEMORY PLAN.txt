@@ -1,8 +1,6 @@
 GENERAL HUMAN MEMORY PLAN
 
-Plan how we could use a sort of human memory for our Waifu AI. for each prompt and response we analyze the important details.
-For example if there is a date going on we rank it a 7/10 of importance and we give it a location in the short term memory.
-If much time has passed we pass it to long term memory but it does not go away because of the high rank we gave it earlier. (this rank is also used in searching for memory)
-
-If for whatever reason we mention the date again we once again pass it into the short term memory for some time.
+ask the AI to respond in json format with all the things we want.
+Also provide the AI with a json format thingie, In the json fomrat thingie needs to be a section that gives the AI
+the knowledge about what it remembers
 

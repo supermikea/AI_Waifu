@@ -6,8 +6,9 @@
 # before executing this file you should make a file named OPENAI_API_KEY and put there your api key
 
 import sys
-
 import openai
+import json
+from biter import fix_string
 
 openai.api_key = ""
 
@@ -40,8 +41,9 @@ def remove_newline(_response):
 
 
 _start_sequence = " Wakari: "
-name = input("What is your name? ")
-_restart_sequence = name
+# name = input("What is your name? ")
+name = "Mike"
+_restart_sequence = " " + name + ": "
 
 prompt = write_read_mem(False)
 
@@ -56,7 +58,7 @@ while True:
         try:
             prompt = prompt + response + _restart_sequence
         except NameError:
-            print("[ERROR] cannot save without any input!\nYou probably reopened and saved instantly again.")
+            print("[ERROR] cannot save without any input!\nYou probably reopened and saved instantly again!")
             print("Exiting...")
             break
         write_read_mem(True, prompt)
@@ -64,7 +66,7 @@ while True:
     user_input = _restart_sequence + user_input
 
     try:
-        prompt = prompt + response + _restart_sequence + user_input + _start_sequence
+        prompt = prompt + response.get("text") + _restart_sequence + user_input + _start_sequence
     except NameError:
         # print("[ERROR] we got a NameError")
         prompt = prompt + user_input + _start_sequence
@@ -77,7 +79,7 @@ while True:
         model="text-davinci-003",
         prompt=prompt,
         temperature=0.9,
-        max_tokens=50,
+        max_tokens=100,
         top_p=1,
         frequency_penalty=1.01,
         presence_penalty=1.03,
@@ -86,7 +88,14 @@ while True:
 
     # print(f"[DEBUG] RAW RESPONSE: {response}")
     response = response.choices[0].text
-    # print(f"[DEBUG] RAW TEXT RESPONSE:{response}")
+    print(f"[DEBUG] RAW TEXT RESPONSE:{response}")
     response = remove_newline(response)
+    print(f"[DEBUG] typeof response: {type(response)}")
+    # response = fix_string(response) TODO finish this function
+    try:
+        response = json.loads(response)
+    except TypeError:  # apparently this does the job but raises an error so we, well ignore it
+        pass
+    print(f"[DEBUG] typeof response: {type(response)}")
 
-    print(_start_sequence + response)
+    print(_start_sequence + response.get("text"))
